@@ -13,6 +13,7 @@ import SignUpPage from './components/SignUpPage';
 import LoginPage from './components/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './components/HomePage';
+import FavoritesPage from './components/FavoritesPage';
 
 const App = () => {
     return (
@@ -28,6 +29,8 @@ const App = () => {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+
                 <Route
                     path="/UploadTrackPage"
                     element={

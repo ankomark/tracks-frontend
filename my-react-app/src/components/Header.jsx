@@ -1,47 +1,9 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import Logo from "../assets/logo.png";
 
-
-// const Header = () => {
-//   return (
-//     <>
-//     <div className="header">
-    
-//       <div className="logo">
-//         <img src={Logo} />
-
-//      </div>
-//       <div className="h1">
-//         <h1>PLAY HEAVENLY MUSIC</h1>
-//         </div>
-//         <nav className="nav-links">
-//         <Link to="/">Home</Link>
-//         <Link to="/music">Music</Link>
-//         <Link to="/events">Events</Link>
-//         <Link to="/about">About</Link>
-//       </nav>
-
-
-      
-    
-//     </div>
-    
-//     <div className="search-bar">
-//         <input type="text" placeholder="Search" />
-//         <button type="submit">Search</button>
-        
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Header;
-// src/components/Header.js
-// src/components/Header.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import logo from '../assets/logo.png'; // Replace with your logo path
+import { FaHeart } from'react-icons/fa'; // Replace with your favorite icon library
 
 const Header = () => {
     const isAuthenticated = !!localStorage.getItem('accessToken');
@@ -62,6 +24,9 @@ const Header = () => {
                 <Link to="/profiles">Profiles</Link>
                 <Link to="/playlists">Playlists</Link>
                 <Link to="/categories">Categories</Link>
+                <Link to="/favorites">
+                    <FaHeart style={{ color: 'red', fontSize: '24px' }} />
+                </Link>
                 {isAuthenticated ? (
                     <>
                         <Link to="/UploadTrackPage">Upload</Link>

@@ -1,16 +1,34 @@
 
 import React from 'react';
 import PlayControls from './PlayControls';
+
 import Likes from './LikeButton';
 import Comments from './Comments';
-import { FaArrowDown } from 'react-icons/fa';
-import { useState } from 'react';
+import { FaArrowDown,FaHeart } from 'react-icons/fa';
+
+import { useState,useEffect  } from 'react';
 
 import { downloadTrack, toggleFavorite } from '../api';
+import { getFavoriteTracks } from '../api';
+
+
 
 
 const TrackItem = ({ track }) => {
-    const [isFavorite, setIsFavorite] = useState(track.is_favorite || false);
+    const [isFavorite, setIsFavorite] = useState(false); // Start with false by default
+    useEffect(() => {
+        const fetchFavoriteStatus = async () => {
+            try {
+                const favoriteTracks = await getFavoriteTracks(); // Fetch the list of favorite tracks for the logged-in user
+                const isTrackFavorite = favoriteTracks.some((favoriteTrack) => favoriteTrack.id === track.id);
+                setIsFavorite(isTrackFavorite); // Update the state based on whether this track is in the user's favorites
+            } catch (error) {
+                console.error('Error fetching favorite status:', error);
+            }
+        };
+
+        fetchFavoriteStatus();
+    }, [track.id]); // Re-run if the track ID changes
 
     const handleDownload = async () => {
         try {
@@ -22,13 +40,19 @@ const TrackItem = ({ track }) => {
 
     const handleToggleFavorite = async () => {
         try {
-            const message = await toggleFavorite(track.id);
-            setIsFavorite(!isFavorite);
-            console.log(message); // "Added to favorites" or "Removed from favorites"
+            const result = await toggleFavorite(track.id); // Pass the track ID explicitly
+            setIsFavorite(result.favorite); // Update the state based on the API response
+           
         } catch (error) {
-            console.error('Error toggling favorite:', error.message);
+            console.error('Failed to toggle favorite:', error);
+            
         }
     };
+    
+    
+    
+    
+
     return (
         <div className="track-item">
             <img src={track.cover_image} alt={track.title} className="track-cover" />
@@ -46,8 +70,11 @@ const TrackItem = ({ track }) => {
                     <FaArrowDown /> Download
                 </button>
                 <button onClick={handleToggleFavorite}>
-                    {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                    {/* Toggle heart color based on favorite status */}
+                    <FaHeart style={{ color: isFavorite ? 'red' : 'gray' }} />
+                    {isFavorite ? ' Remove from Favorites' : ' + to Favorites'}
                 </button>
+
             </div>
         </div>
     );

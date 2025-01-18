@@ -177,7 +177,12 @@ export const downloadTrack = async (trackId, fileName) => {
 };
 
 export const toggleFavorite = async (trackId) => {
-    const token = localStorage.getItem('authToken'); // Adjust according to your auth setup
+    if (!trackId || typeof trackId !== 'number') {
+        console.error('Invalid trackId:', trackId); // Debugging log
+        throw new Error('Invalid track ID provided.');
+    }
+
+    const token = localStorage.getItem('accessToken');
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -185,11 +190,39 @@ export const toggleFavorite = async (trackId) => {
     };
 
     try {
-        const response = await axios.post(`/api/songs/tracks/${trackId}/favorite/`, {}, config);
-        return response.data.message; // "Added to favorites" or "Removed from favorites"
+        const response = await axios.post(
+            `http://127.0.0.1:8000/api/songs/tracks/${trackId}/favorite/`,
+            {},
+            config
+        );
+        return response.data; // Return the full response (including favorite state)
     } catch (error) {
         console.error('Error toggling favorite:', error);
-        throw error;
+        if (error.response) {
+            throw new Error(
+                `Error ${error.response.status}: ${error.response.data.detail || 'Could not toggle favorite.'}`
+            );
+        }
+        throw new Error('Network error: Could not connect to the server.');
     }
 };
-// Additional API calls can be added here as needed
+export const getFavoriteTracks = async () => {
+    const token = localStorage.getItem('accessToken');
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.get("http://127.0.0.1:8000/api/songs/favorites/", config);
+        return response.data; // Return the list of favorite tracks
+    } catch (error) {
+        if (error.response) {
+            console.error('Error fetching favorite tracks:', error.response.data);
+        } else {
+            console.error('Error fetching favorite tracks:', error.message);
+        }
+        throw new Error('Could not fetch favorite tracks.');
+    }
+};

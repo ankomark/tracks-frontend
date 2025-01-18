@@ -1,6 +1,7 @@
 // src/components/Playlist.js
 import React, { useEffect, useState } from 'react';
 import { fetchPlaylists } from '../api';
+import FavoritesPage from './FavoritesPage';
 
 const Playlist = () => {
     const [playlists, setPlaylists] = useState([]);
@@ -21,7 +22,7 @@ const Playlist = () => {
 
     return (
         <div>
-            <h2>Playlists</h2>
+            <h2>WHEN YOU ADD SONGS TO YOUR FAVORITE THEY BECOME PART OF YOUR PLAYLIST</h2>
             <ul>
                 {playlists.map((playlist) => (
                     <li key={playlist.id}>
@@ -30,6 +31,10 @@ const Playlist = () => {
                     </li>
                 ))}
             </ul>
+
+            <div>
+                <FavoritesPage/>
+            </div>
         </div>
     );
 };
