@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:8000/api/songs'; // Adjust the URL as needed
-
+export const BASE_URL = 'http://127.0.0.1:8000/api';
 // Function to get the token from local storage
 const getAuthToken = () => localStorage.getItem('accessToken');
 
@@ -17,17 +17,29 @@ export const fetchTracks = async () => {
     return response.data;
 };
 
-export const fetchProfiles = async () => {
-    const token = getAuthToken();
-    
-    const response = await axios.get(`${API_URL}/profiles/`, {
+// export const fetchProfiles = async () => {
+//     const token = getAuthToken();
+//     const response = await axios.get(`${BASE_URL}/profiles/`, {
+//         headers: { Authorization: `Bearer ${token}` },
+//     });
+//     return response.data;
+// };
+export const fetchProfile = async () => {
+    const token = getAuthToken(); // Use the function to get the token
+    if (!token) {
+        throw new Error('No authentication token found');
+    }
+
+    const response = await axios.get(`${BASE_URL}/profiles/me/`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
+
     return response.data;
 };
 
+  
 export const fetchUsers = async () => {
     const token = getAuthToken();
     
@@ -225,4 +237,14 @@ export const getFavoriteTracks = async () => {
         }
         throw new Error('Could not fetch favorite tracks.');
     }
+};
+export const checkProfileExistence = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) throw new Error('User not authenticated');
+
+    const response = await axios.get(`${BASE_URL}/profiles/check_or_redirect/`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
 };

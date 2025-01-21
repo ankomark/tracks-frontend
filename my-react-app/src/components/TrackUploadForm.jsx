@@ -1,7 +1,6 @@
-// src/components/TrackUploadForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { createTrack } from '../api'; // Ensure this API function is defined
-
 
 const TrackUploadForm = () => {
     const [title, setTitle] = useState('');
@@ -11,6 +10,8 @@ const TrackUploadForm = () => {
     const [lyrics, setLyrics] = useState('');
     const [audioFileMessage, setAudioFileMessage] = useState('');
     const [coverImageMessage, setCoverImageMessage] = useState('');
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleAudioFileChange = (e) => {
         const file = e.target.files[0];
@@ -52,7 +53,7 @@ const TrackUploadForm = () => {
 
         try {
             await createTrack(formData); // Ensure this function sends a POST request
-            // Optionally, reset the form or notify the user
+            navigate('/'); // Redirect to the home page on success
         } catch (error) {
             console.error('Error uploading track:', error);
         }

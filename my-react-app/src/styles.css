@@ -46,26 +46,34 @@ ul {
   align-items: center;
   justify-content: space-between;
   background: rgba(176, 216, 235, 0.13);
-  padding: 20px;
+  padding: 1rem 2rem;
   border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.header-left {
+  display: flex;
+  align-items: center;
 }
 .logo {
-  height: 60px;
+  height: 50px;
   border-radius: 50%;
+  margin-right: 1rem;
 }
 .nav-links {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 1rem;
 }
 .nav-links a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 .nav-links a:hover {
-  color: #61dafb;
+  color: #ff6347;
 }
 .search-bar {
   display: flex;
@@ -413,6 +421,7 @@ h2 {
 
 .artist-label {
   margin-bottom: 15px;
+  color: #121212;
 }
 
 .signup-button {
@@ -579,4 +588,77 @@ h2 {
   text-align: center;
   font-size: 1.2rem;
   color: #6c757d;
+}
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 20px;
+  width: 300px; /* Adjust width as needed */
+  transition: transform 0.2s;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+}
+
+.profile-card img {
+  width: 100%; /* Make image responsive */
+  height: auto;
+  border-radius: 50%; /* Make image circular */
+  margin-bottom: 15px;
+}
+
+.profile-card h3 {
+  color: #007bff;
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.profile-card p {
+  color: #555;
+  margin: 5px 0;
+}
+.profile-picture {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+.create-profile-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff6347;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.create-profile-link:hover {
+  background-color: #ff4500;
+}
+.logout-button {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #ffffff;
+  color: #121212;
 }

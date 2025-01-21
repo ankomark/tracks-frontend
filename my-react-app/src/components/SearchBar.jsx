@@ -1,21 +1,23 @@
-// src/components/SearchBar.js
+// src/components/SearchBar.jsx
 import React, { useState } from 'react';
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-        // Implement search functionality based on the search term
+    const handleChange = (event) => {
+        setSearchTerm(event.target.value);
+        onSearch(event.target.value); // Notify the parent of the search term change
     };
 
     return (
-        <input
-            type="text"
-            placeholder="Search tracks..."
-            value={searchTerm}
-            onChange={handleSearch}
-        />
+        <div className="search-bar">
+            <input
+                type="text"
+                placeholder="Search for tracks..."
+                value={searchTerm}
+                onChange={handleChange}
+            />
+        </div>
     );
 };
 
